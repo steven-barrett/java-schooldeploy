@@ -44,11 +44,11 @@
 <!--            <scope>runtime</scope>-->
         </dependency>
 
-        <!-- PostgreSQL -->
-<!--        <dependency>-->
-<!--            <groupId>org.postgresql</groupId>-->
-<!--            <artifactId>postgresql</artifactId>-->
-<!--        </dependency>-->
+<!--         PostgreSQL-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -125,6 +125,25 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Heroku Maven Plugin Configuration -->
+            <!-- https://cwiki.apache.org/confluence/display/MAVEN/Maven+Properties+Guide -->
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>2.0.3</version>
+                <configuration>
+                    <appName>steven122185-schooldeploy</appName>
+                    <includeTarget>false</includeTarget>
+                    <includes>
+                        <!--   For windows      <include>${project.build.directory}\${project.build.finalName}.jar</include>-->
+                        <include>${project.build.directory}\${project.build.finalName}.jar</include>
+                    </includes>
+                    <jdkVersion>${java.version}</jdkVersion>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -Dserver.port=$PORT -jar target/${project.build.finalName}.jar</web>
+                    </processTypes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
