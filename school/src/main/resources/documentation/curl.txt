@@ -1,0 +1,84 @@
+/students/students
+listAllStudents()
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" http://steven122185-schooldeploy.herokuapp.com/students/students
+RESULTS:{
+[{"studid":1,"studname":"John","courses":[{"courseid":1,"coursename":"Data Science","instructor":{"instructid":1,"instructname":"Sally"}},
+{"courseid":4,"coursename":"Java Back End","instructor":{"instructid":2,"instructname":"Lucy"}}]},{"studid":2,"studname":"Julian","courses":[{"courseid":2,
+"coursename":"JavaScript","instructor":{"instructid":1,"instructname":"Sally"}}]},{"studid":3,"studname":"Mary","courses":[{"courseid":1,"coursename":"Data Science",
+"instructor":{"instructid":1,"instructname":"Sally"}},{"courseid":3,"coursename":"Node.js","instructor":{"instructid":1,"instructname":"Sally"}},{"courseid":6,
+"coursename":"Mobile Android","instructor":{"instructid":3,"instructname":"Charlie"}}]}]
+}
+
+/Student/{StudentId}
+getStudentById()
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" http://steven122185-schooldeploy.herokuapp.com/Student/1
+RESPONSE:
+{"title":"/Students/Student/1","status":404,"detail":"uri=/Students/Student/1;client=68.202.41.165;user=admin","timestamp":"26 Jul 2019 00:08:37:781 +0000","developerMessage":"Rest Handler Not Found (check for valid URI)","errors":{}}
+
+/student/namelike/{name}
+getStudentByNameContaining()
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" http://steven122185-schooldeploy.herokuapp.com/students/student/namelike/John
+RESPONSE:
+[{"studid":1,"studname":"John","courses":[{"courseid":1,"coursename":"Data Science","instructor":{"instructid":1,"instructname":"Sally"}},{"courseid":4,"coursename":"Java Back End",
+"instructor":{"instructid":2,"instructname":"Lucy"}}]},{"studid":40,"studname":"John","courses":[]}]
+
+/students/Student
+addNewStudent()
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" -d "{ \"studname\":\"Phil\" }" http://steven122185-schooldeploy.herokuapp.com/students/Student
+RESPONSE:
+   {
+        "studid": 43,
+        "studname": "Phil",
+        "courses": []
+    }
+
+/Student/{Studentid}
+updateStudent()
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" -d "{ \"studname\":\"Philip\" }" http://steven122185-schooldeploy.herokuapp.com/students/Student/43
+RESPONSE:
+    {
+        "studid": 43,
+        "studname": "Philip",
+        "courses": []
+    }
+
+/Student/{StudentId}
+curl -X DELETE -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" http://steven122185-schooldeploy.herokuapp.com/students/Student/43
+RESPONSE: {Student 43 was deleted}
+
+/courses
+listAllCourses()
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" http://steven122185-schooldeploy.herokuapp.com/courses/courses
+RESPONSE:
+[{"courseid":1,"coursename":"Data Science","instructor":{"instructid":1,"instructname":"Sally"},"students":[{"studid":1,"studname":"John"},{"studid":3,"studname":"Mary"}]},
+{"courseid":2,"coursename":"JavaScript","instructor":{"instructid":1,"instructname":"Sally"},"students":[{"studid":2,"studname":"Julian"}]},{"courseid":3,"coursename":"Node.js",
+"instructor":{"instructid":1,"instructname":"Sally"},"students":[{"studid":3,"studname":"Mary"}]}]
+
+/studcount
+getCountStudentsInCourses()
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" http://steven122185-schooldeploy.herokuapp.com/courses/studcount
+RESPONSE:
+[{"courseid":3,"coursename":"Node.js","countstudents":1},{"courseid":2,"coursename":"JavaScript","countstudents":1},{"courseid":6,"coursename":"Mobile Android","countstudents":1},
+{"courseid":1,"coursename":"Data Science","countstudents":2},{"courseid":4,"coursename":"Java Back End","countstudents":1}]
+
+/course/{courseId}
+findCourseById()
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" http://steven122185-schooldeploy.herokuapp.com/courses/course/1
+RESPONSE:
+{"courseid":1,"coursename":"Data Science","instructor":{"instructid":1,"instructname":"Sally"},"students":[{"studid":1,"studname":"John"},{"studid":3,"studname":"Mary"}]}
+
+/course/add
+addNewCourse()
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" -d "{ \"coursename\":\"Klingon\"}" http://steven122185-schooldeploy.herokuapp.com/courses/course/add
+RESPONSE:
+    {
+        "courseid": 44,
+        "coursename": "Klingon",
+        "instructor": null,
+        "students": []
+    }
+
+/courses/{courseId}
+deleteCourseById()
+curl -X DELETE -H "Authorization: Bearer 00f0387f-58be-4052-8120-eb3de0a91a55" http://steven122185-schooldeploy.herokuapp.com/courses/courses/44
+RESPONSE: {Deleted course ID:44 'Klingon'}
